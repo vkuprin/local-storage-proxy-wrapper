@@ -1,0 +1,21 @@
+{
+  "name": "local-storage-proxy-wrapper",
+  "version": "1.1.1",
+  "description": "localstorage proxy wrapper with listener (available on browser and node)",
+  "keywords": [
+    "localstorage",
+    "wrapper",
+    "store",
+    "proxy",
+    "listener"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "main": "index.js",
+    "types": "index.d.ts",
+    "prepublish": "tsc"
+  },
+  "author": "Vitaly Kuprin",
+  "license": "MIT"
+}
