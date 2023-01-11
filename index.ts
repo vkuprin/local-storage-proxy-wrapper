@@ -40,7 +40,3 @@ const checkWindow: () => (object) = () => {
 }
 
 export const localStorageProxy = new Proxy(checkWindow(), new LocalStorageWrapper());
-
-if (!window.Proxy) {
-  window.Proxy = ProxyPolyfill;
-}
