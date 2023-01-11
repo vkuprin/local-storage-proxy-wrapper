@@ -2,8 +2,7 @@
 
 A library which provides assistance in managing the localStorage object and adds the capability to detect modifications to localStorage.
 
-[![Rate this package](https://badges.openbase.com/js/rating/local-storage-proxy-wrapper.svg?style=openbase&token=qocsFqVQshrwHHfbBZFxCary9nXTxo2R90G48g8zdOM=)](https://openbase.com/js/local-storage-proxy-wrapper?utm_source=embedded&amp;utm_medium=badge&amp;utm_campaign=rate-badge)
-
+[![Rate this package](https://badges.openbase.com/js/rating/local-storage-proxy-wrapper.svg?token=qocsFqVQshrwHHfbBZFxCary9nXTxo2R90G48g8zdOM=)](https://openbase.com/js/local-storage-proxy-wrapper?utm_source=embedded&amp;utm_medium=badge&amp;utm_campaign=rate-badge)
 ### Installation
 To install the library, run the following command:
 
