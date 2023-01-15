@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Example Storage</title>
+    <script> var exports = {}; </script>
     <script type="text/javascript" src="../dist/index.js"></script>
 </head>
 <body>
 <script>
     const store = new LocalStorageWrapper(3);
 
-    // ToDo: add subscribe method to all listeners
     store.addChangeListener('foo', (oldStore, newStore) => {
         console.log('oldStore', oldStore);
         console.log('newStore', newStore);
