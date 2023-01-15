@@ -1,7 +1,21 @@
-type ChangeListener = (newValue: any, oldValue: any, key: string) => void;
+export type ListenerValue = string | number | boolean | object | Array<string | number | boolean | object>;
+
+export type ChangeListener = (
+    newValue: ListenerValue,
+    oldValue: ListenerValue,
+    key: string
+) => void;
 
 export class LocalStorageWrapper {
   private changeListeners: { [key: string]: ChangeListener[] } = {};
+
+  private notifyListeners(newValue: ListenerValue, oldValue: ListenerValue, key: string): void {
+    if (this.changeListeners[key]) {
+      for (const listener of this.changeListeners[key]) {
+        listener(newValue, oldValue, key);
+      }
+    }
+  }
 
   get(target: Storage, key: string) {
     try {
@@ -11,18 +25,14 @@ export class LocalStorageWrapper {
     }
   }
 
-  set(target: Storage, key: string, value: any): boolean {
+  set(target: Storage, key: string, value: ListenerValue): boolean {
     try {
       const oldValue = target[key];
       target[key] = value;
-      if (this.changeListeners[key]) {
-        for (const listener of this.changeListeners[key]) {
-          listener(value, oldValue, key);
-        }
-      }
+      this.notifyListeners(value, oldValue, key);
       return true;
     } catch (e) {
-        throw new Error(`Error setting value for key ${key} in storage`);
+      throw new Error(`Error setting value for key ${key} in storage`);
     }
   }
 

@@ -19,29 +19,6 @@ And access properties of the localStorage object in a more intuitive way.
 ### Usage
 To use the library, import it into your project:
 
-### Direct usage with no wrapper
-```javascript
-import { localStorageProxy } from 'local-storage-proxy-wrapper';
-```
-
-To set a value, use the following syntax:
-
-```javascript
-localStorageProxy.yourKey = 'yourValue';
-```
-
-To get a value, use the following syntax:
-
-```javascript
-const yourValue = localStorageProxy.yourKey;
-```
-
-To delete a value, use the following syntax:
-
-```javascript
-delete localStorageProxy.yourKey;
-```
-
 ### Usage with a wrapper
 
 ```javascript
@@ -86,4 +63,28 @@ To remove a change listener, use the following syntax:
 const store = new LocalStorageWrapper();
 
 store.clearChangeListeners('yourKey');
+```
+
+
+### Direct usage with no wrapper
+```javascript
+import { localStorageProxy } from 'local-storage-proxy-wrapper';
+```
+
+To set a value, use the following syntax:
+
+```javascript
+localStorageProxy.yourKey = 'yourValue';
+```
+
+To get a value, use the following syntax:
+
+```javascript
+const yourValue = localStorageProxy.yourKey;
+```
+
+To delete a value, use the following syntax:
+
+```javascript
+delete localStorageProxy.yourKey;
 ```
