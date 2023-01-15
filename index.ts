@@ -8,12 +8,38 @@ export type ChangeListener = (
 
 export class LocalStorageWrapper {
   private changeListeners: { [key: string]: ChangeListener[] } = {};
+  private history: { [key: string]: any } = {};
+  private readonly historySize: number;
+
+  constructor(historySize: number = 1) {
+    this.historySize = historySize;
+  }
 
   private notifyListeners(newValue: ListenerValue, oldValue: ListenerValue, key: string): void {
+    if (!this.history[key]) {
+      this.history[key] = []
+    }
+    this.history[key].unshift(oldValue);
+    if (this.history[key].length > this.historySize) {
+      this.history[key].pop();
+    }
     if (this.changeListeners[key]) {
       for (const listener of this.changeListeners[key]) {
         listener(newValue, oldValue, key);
       }
+    }
+  }
+
+  getHistory(key: string): ListenerValue[] {
+    if (!this.history[key]) {
+      return []
+    }
+    return this.history[key]
+  }
+
+  clearHistory(key: string): void {
+    if (this.history[key]) {
+      this.history[key] = []
     }
   }
 
