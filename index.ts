@@ -52,4 +52,4 @@ export class LocalStorageWrapper {
 
 const checkWindow = () => (typeof window === 'undefined' ? {} : localStorage);
 
-export const localStorageProxy = new Proxy(checkWindow(), new LocalStorageWrapper());
+export const localStorageProxy: Storage = <Storage> new Proxy(checkWindow(), new LocalStorageWrapper());
