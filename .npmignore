@@ -2,3 +2,5 @@ index.js
 .idea
 tsconfig.json
 index.ts
+example/*
+example

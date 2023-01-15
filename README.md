@@ -57,6 +57,19 @@ store.set(localStorageProxy, 'yourKey', 'yourValueOne');
 store.set(localStorageProxy, 'yourKey', 'yourValueTwo'); 
 ```
 
+To get the history of a key, use the following syntax:
+
+```javascript
+const store = new LocalStorageWrapper(3); // keep track of 3 previous values
+
+store.set(localStorageProxy, 'yourKey', 'yourValueOne');
+store.set(localStorageProxy, 'yourKey', 'yourValueTwo');
+store.set(localStorageProxy, 'yourKey', 'yourValueThree');
+
+console.log(store.getHistory('yourKey')); // ['yourValueOne', 'yourValueTwo', 'yourValueThree']
+```
+// Will log ['yourValueOne', 'yourValueTwo', 'yourValueThree']
+
 To remove a change listener, use the following syntax:
 
 ```javascript
