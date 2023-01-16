@@ -11,6 +11,8 @@ export type ChangeListener = (
 export class LocalStorageWrapper {
   private changeListeners: { [key: string]: ChangeListener[] } = {};
 
+  private globalChangeListeners: ChangeListener[] = [];
+
   private history: { [key: string]: any } = {};
 
   private readonly historySize: number;
@@ -29,6 +31,12 @@ export class LocalStorageWrapper {
     }
     if (this.changeListeners[key]) {
       for (const listener of this.changeListeners[key]) {
+        listener(newValue, oldValue, key);
+      }
+    }
+
+    if (this.globalChangeListeners.length > 0) {
+      for (const listener of this.globalChangeListeners) {
         listener(newValue, oldValue, key);
       }
     }
@@ -108,6 +116,15 @@ export class LocalStorageWrapper {
       this.changeListeners[key] = [];
     }
   }
+
+  /*
+    * Listen to all changes in the storage for all keys
+    * @param listener The listener to add
+    * @param storage The storage to listen to
+  */
+  addGlobalChangeListener(listener: ChangeListener): void {
+      this.globalChangeListeners.push(listener);
+    }
 }
 
 const checkWindow = () => (typeof window === 'undefined' ? {} : localStorage);
