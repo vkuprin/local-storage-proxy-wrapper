@@ -87,6 +87,19 @@ const store = new LocalStorageWrapper();
 store.clearChangeListeners('yourKey');
 ```
 
+To get or set multiple keys, use the following syntax:
+
+```javascript
+const store = new LocalStorageWrapper();
+
+store.setMultiple(localStorageProxy, {
+    keyOne: 'valueOne',
+    keyTwo: 'valueTwo',
+    keyThree: 'valueThree',
+});
+
+store.getMultiple('keyOne', 'keyTwo', 'keyThree'); // { keyOne: 'valueOne', keyTwo: 'valueTwo', keyThree: 'valueThree' }
+```
 
 ### Direct usage with no wrapper
 ```javascript
