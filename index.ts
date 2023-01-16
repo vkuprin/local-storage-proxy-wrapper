@@ -1,4 +1,6 @@
-export type ListenerValue = string | number | boolean | object | Array<string | number | boolean | object>;
+export type ListenerValue =
+    string | number | boolean | object |
+    Array<string | number | boolean | object>;
 
 export type ChangeListener = (
     newValue: ListenerValue,
@@ -8,7 +10,9 @@ export type ChangeListener = (
 
 export class LocalStorageWrapper {
   private changeListeners: { [key: string]: ChangeListener[] } = {};
+
   private history: { [key: string]: any } = {};
+
   private readonly historySize: number;
 
   constructor(historySize: number = 1) {
@@ -17,7 +21,7 @@ export class LocalStorageWrapper {
 
   private notifyListeners(newValue: ListenerValue, oldValue: ListenerValue, key: string): void {
     if (!this.history[key]) {
-      this.history[key] = []
+      this.history[key] = [];
     }
     this.history[key].unshift(oldValue);
     if (this.history[key].length > this.historySize) {
@@ -30,19 +34,33 @@ export class LocalStorageWrapper {
     }
   }
 
+  /*
+    * Returns the history of changes for a given key
+    * depends on the historySize passed to the constructor
+    * @param key name The key to get the history for
+  */
   getHistory(key: string): ListenerValue[] {
     if (!this.history[key]) {
-      return []
+      return [];
     }
-    return this.history[key]
+    return this.history[key];
   }
 
+  /*
+    * Clears the history for a given key
+    * @param key name The key to clear the history for
+  */
   clearHistory(key: string): void {
     if (this.history[key]) {
-      this.history[key] = []
+      this.history[key] = [];
     }
   }
 
+  /*
+    * Gets the value for a given key from the storage
+    * @param key name The key to get the value for
+    * @param storage The storage to get the value from
+  */
   get(target: Storage, key: string) {
     try {
       return target[key];
@@ -51,6 +69,12 @@ export class LocalStorageWrapper {
     }
   }
 
+  /*
+    * Sets the value for a given key in the storage
+    * @param target The storage to set the value in
+    * @param key name The key to set the value for
+    * @param value The value to set
+  */
   set(target: Storage, key: string, value: ListenerValue): boolean {
     try {
       const oldValue = target[key];
@@ -62,6 +86,12 @@ export class LocalStorageWrapper {
     }
   }
 
+  /*
+    * Adds a change listener for a given key to
+    * observe changes in the storage for old and new values
+    * @param key name The key to add the listener for
+    * @param listener The listener to add
+  */
   addChangeListener(key: string, listener: ChangeListener): void {
     if (!this.changeListeners[key]) {
       this.changeListeners[key] = [];
@@ -69,11 +99,15 @@ export class LocalStorageWrapper {
     this.changeListeners[key].push(listener);
   }
 
+  /*
+    * Removes a change listener for a given key
+    * @param key name The key to remove the listener for
+  */
   clearChangeListeners(key: string): void {
-      if (this.changeListeners[key]) {
-        this.changeListeners[key] = [];
-      }
+    if (this.changeListeners[key]) {
+      this.changeListeners[key] = [];
     }
+  }
 }
 
 const checkWindow = () => (typeof window === 'undefined' ? {} : localStorage);
