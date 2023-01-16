@@ -125,6 +125,38 @@ export class LocalStorageWrapper {
   addGlobalChangeListener(listener: ChangeListener): void {
       this.globalChangeListeners.push(listener);
     }
+
+  /*
+    * Removes a global change listener
+    * @param listener The listener to remove
+  */
+  clearGlobalChangeListeners(): void {
+      this.globalChangeListeners = [];
+  }
+
+  /*
+    * Sets multiple values in the storage at once
+    * @param values The values to set in the object format { key: value }
+  */
+  setMultiple(data: { [key: string]: ListenerValue }): void {
+    for (const key of Object.keys(data)) {
+      const oldValue = window.localStorage.getItem(key);
+      window.localStorage.setItem(key, data[key]);
+      this.notifyListeners(data[key], oldValue, key);
+    }
+  }
+
+  /*
+    * Gets multiple values in the storage at once
+    * @param keys The keys to get the values for in the array format [key1, key2]
+  */
+  getMultiple(keys: string[]): { [key: string]: ListenerValue } {
+    const result = {};
+    for (const key of keys) {
+      result[key] = window.localStorage.getItem(key);
+    }
+    return result;
+  }
 }
 
 const checkWindow = () => (typeof window === 'undefined' ? {} : localStorage);

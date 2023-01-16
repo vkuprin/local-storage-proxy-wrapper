@@ -23,6 +23,13 @@
     store.set(localStorage, 'foo', 'bar4');
     store.set(localStorage, 'soo', 'sar');
 
+    store.setMultiple({
+        one: 'one',
+        two: 'two',
+        three: 'three',
+        four: 'four',
+    });
+
     console.log(store.get('foo'));
 
     console.log(store.getHistory('foo'));

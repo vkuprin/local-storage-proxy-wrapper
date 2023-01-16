@@ -47,7 +47,7 @@ To listen for changes to the localStorage object, use the following syntax:
 const store = new LocalStorageWrapper();
 
 store.addChangeListener('yourKey', (newValue, oldValue) => {
-  console.log('changed', newValue, oldValue);
+    console.log('changed', newValue, oldValue);
 });
 
 // Will log 'changed yourValueOne undefined'
@@ -68,7 +68,16 @@ store.set(localStorageProxy, 'yourKey', 'yourValueThree');
 
 console.log(store.getHistory('yourKey')); // ['yourValueOne', 'yourValueTwo', 'yourValueThree']
 ```
-// Will log ['yourValueOne', 'yourValueTwo', 'yourValueThree']
+
+To listen global changes to all keys in the storage use the following syntax:
+
+```javascript
+const store = new LocalStorageWrapper();
+
+store.addGlobalChangeListener((key, newValue, oldValue) => {
+    console.log('changed', key, newValue, oldValue);
+});
+```
 
 To remove a change listener, use the following syntax:
 
