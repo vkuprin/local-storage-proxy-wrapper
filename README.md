@@ -25,7 +25,7 @@ To use the library, import it into your project:
 import { LocalStorageWrapper, localStorageProxy } from 'local-storage-proxy-wrapper';
 ```
 
-To set a value, use the following syntax:
+To <b>set</b> a value, use the following syntax:
 
 ```javascript
 const store = new LocalStorageWrapper();
@@ -33,7 +33,7 @@ const store = new LocalStorageWrapper();
 store.set(localStorageProxy, 'yourKey', 'yourValue');
 ```
 
-To get a value, use the following syntax:
+To <b>get</b> a value, use the following syntax:
 
 ```javascript
 const store = new LocalStorageWrapper();
@@ -41,7 +41,7 @@ const store = new LocalStorageWrapper();
 store.get(localStorageProxy, 'yourKey');
 ```
 
-To listen for changes to the localStorage object, use the following syntax:
+To <b>listen for changes</b> to the localStorage object, use the following syntax:
 
 ```javascript
 const store = new LocalStorageWrapper();
@@ -57,7 +57,7 @@ store.set(localStorageProxy, 'yourKey', 'yourValueOne');
 store.set(localStorageProxy, 'yourKey', 'yourValueTwo'); 
 ```
 
-To get the history of a key, use the following syntax:
+To <b>get the history of a key</b>, use the following syntax:
 
 ```javascript
 const store = new LocalStorageWrapper(3); // keep track of 3 previous values
@@ -69,7 +69,7 @@ store.set(localStorageProxy, 'yourKey', 'yourValueThree');
 console.log(store.getHistory('yourKey')); // ['yourValueOne', 'yourValueTwo', 'yourValueThree']
 ```
 
-To listen global changes to all keys in the storage use the following syntax:
+To <b>listen global changes to all keys</b> in the storage use the following syntax:
 
 ```javascript
 const store = new LocalStorageWrapper();
@@ -79,7 +79,7 @@ store.addGlobalChangeListener((key, newValue, oldValue) => {
 });
 ```
 
-To remove a change listener, use the following syntax:
+To <b>remove a change listener</b>, use the following syntax:
 
 ```javascript
 const store = new LocalStorageWrapper();
@@ -87,7 +87,7 @@ const store = new LocalStorageWrapper();
 store.clearChangeListeners('yourKey');
 ```
 
-To get or set multiple keys, use the following syntax:
+To <b>get or set multiple keys</b>, use the following syntax:
 
 ```javascript
 const store = new LocalStorageWrapper();
@@ -106,20 +106,106 @@ store.getMultiple('keyOne', 'keyTwo', 'keyThree'); // { keyOne: 'valueOne', keyT
 import { localStorageProxy } from 'local-storage-proxy-wrapper';
 ```
 
-To set a value, use the following syntax:
+To <b>set</b> a value, use the following syntax:
 
 ```javascript
 localStorageProxy.yourKey = 'yourValue';
 ```
 
-To get a value, use the following syntax:
+To <b>get</b> a value, use the following syntax:
 
 ```javascript
 const yourValue = localStorageProxy.yourKey;
 ```
 
-To delete a value, use the following syntax:
+To <b>delete</b> a value, use the following syntax:
 
 ```javascript
 delete localStorageProxy.yourKey;
 ```
+
+### API
+
+#### `constructor(historySize: number = 1)`
+
+Creates an instance of `LocalStorageWrapper`.
+
+##### Parameters
+
+-   `historySize`: The number of previous values that should be stored in the history for each key. Default is `1`.
+
+#### `getHistory(key: string): ListenerValue[]`
+
+Returns the history of changes for a given key, depending on the historySize passed to the constructor.
+
+##### Parameters
+
+-   `key`: The key to get the history for
+
+##### Returns
+
+-   An array of previous values that have been stored for the key.
+
+#### `clearHistory(key: string): void`
+
+Clears the history for a given key
+
+##### Parameters
+
+-   `key`: The key to clear the history for
+
+#### `get(target: Storage, key: string)`
+
+Gets the value for a given key from the storage.
+
+##### Parameters
+
+-   `target`: The storage to get the value from.
+-   `key`: The key to get the value for.
+
+##### Returns
+
+-   The value for the given key from the storage.
+
+#### `set(target: Storage, key: string, value: ListenerValue): boolean`
+
+Sets the value for a given key in the storage.
+
+##### Parameters
+
+-   `target`: The storage to set the value in.
+-   `key`: The key to set the value for.
+-   `value`: The value to set.
+
+##### Returns
+
+-   `true` if the value was set successfully, `false` otherwise.
+
+#### `addChangeListener(key: string, listener: ChangeListener): void`
+
+Adds a change listener for a given key to observe changes in the storage for old and new values.
+
+##### Parameters
+
+-   `key`: The key to add the listener for.
+-   `listener`: The listener function to add. The function is called with the new value , old value, and key as arguments.
+
+#### `clearChangeListeners(key: string): void`
+
+Removes all change listeners for a given key.
+
+##### Parameters
+
+-   `key`: The key to remove the listeners for.
+
+#### `addGlobalChangeListener(listener: ChangeListener): void`
+
+Adds a listener that will be called on any change in the storage, regardless of the key that was changed.
+
+##### Parameters
+
+-   `listener`: The listener function to add. The function is called with the new value, old value, and key as arguments.
+
+#### `clearGlobalChangeListeners(): void`
+
+Removes all global change listeners.
