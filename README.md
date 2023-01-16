@@ -92,7 +92,7 @@ To <b>get or set multiple keys</b>, use the following syntax:
 ```javascript
 const store = new LocalStorageWrapper();
 
-store.setMultiple(localStorageProxy, {
+store.setMultiple({
     keyOne: 'valueOne',
     keyTwo: 'valueTwo',
     keyThree: 'valueThree',
@@ -209,3 +209,21 @@ Adds a listener that will be called on any change in the storage, regardless of 
 #### `clearGlobalChangeListeners(): void`
 
 Removes all global change listeners.
+
+##### Parameters
+
+-   `key`: The keys collection to set the values for.
+-   `values`: The values to set.
+
+##### `setMultiple(values: { [key: string]: ListenerValue }): void`
+
+Sets multiple values in the storage.
+
+##### Parameters
+
+-   `key`: The keys collection to get the values for.
+-   `values`: The values to get.
+
+##### `getMultiple(...keys: string[]): { [key: string]: ListenerValue }`
+
+Gets multiple values from the storage.
