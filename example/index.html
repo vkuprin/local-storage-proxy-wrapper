@@ -12,7 +12,7 @@
 <script>
     const store = new LocalStorageWrapper(3);
 
-    store.addChangeListener('foo', (oldStore, newStore) => {
+    store.addGlobalChangeListener((oldStore, newStore) => {
         console.log('oldStore', oldStore);
         console.log('newStore', newStore);
     });
