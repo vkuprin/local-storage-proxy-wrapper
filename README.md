@@ -2,14 +2,12 @@
 
 A library which provides assistance in managing the localStorage object and adds the capability to detect modifications to localStorage.
 
-[//]: # ([![Rate this package]&#40;https://badges.openbase.com/js/rating/local-storage-proxy-wrapper.svg?token=qocsFqVQshrwHHfbBZFxCary9nXTxo2R90G48g8zdOM=&#41;]&#40;https://openbase.com/js/local-storage-proxy-wrapper?utm_source=embedded&amp;utm_medium=badge&amp;utm_campaign=rate-badge&#41;)
-
-### Table of Contents
-- [Installation](#Installation)
-- [Purpose](#purpose)
+### API Reference
   - [API Reference](#API)
     - [constructor(historySize: number = 1)](#constructorhistorysize-number--1)
     - [getHistory(key: string): ListenerValue[]](#gethistorykey-string-listenervalue)
+    - [get(target: Storage, key: string)](#gettarget-storage-key-string)
+    - [set(target: Storage, key: string, value: ListenerValue): boolean](#settarget-storage-key-string-value-listenervalue-boolean)
     - [clearHistory(key: string): void](#clearhistorykey-string-void)
     - [addChangeListener(key: string, listener: Listener): void](#addchangelistenerkey-string-listener-changelistener-void)
     - [clearChangeListeners(key: string): void](#clearchangelistenerskey-string-void)
@@ -17,7 +15,7 @@ A library which provides assistance in managing the localStorage object and adds
     - [clearGlobalChangeListeners(): void](#clearglobalchangelisteners-void)
     - [setMultiple(values: { [key: string]: string }): void](#setmultiplevalues--key-string-listenervalue--void)
     - [getMultiple(...keys: string[]): { [key: string]: string }](#getmultiplekeys-string--key-string-listenervalue-)
-  - [Examples](#examples)
+    - [removeMultiple(...keys: string[]): void](#removemultiplekeys-string-void)
 
 ### Installation
 To install the library, run the following command:
@@ -240,5 +238,13 @@ Sets multiple values in the storage.
 -   `values`: The values to get.
 
 ##### `getMultiple(...keys: string[]): { [key: string]: ListenerValue }`
+
+##### Parameters
+
+-   `keys`: The keys to remove the values for.
+
+##### `removeMultiple(...keys: string[]): void`
+
+Removes multiple values from the storage at once.
 
 Gets multiple values from the storage.
