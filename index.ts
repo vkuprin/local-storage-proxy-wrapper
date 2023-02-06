@@ -162,7 +162,7 @@ export class LocalStorageWrapper {
     * Removes multiple values in the storage at once
     * @param keys The keys to remove the values for in the array format [key1, key2]
   */
-  removeMultiple(keys: string[], notifyListeners: boolean = true, notifyGlobalListeners: boolean = true, notifyHistory: boolean = true): void {
+  removeMultiple(keys: string[]): void {
     for (const key of keys) {
       const oldValue = window.localStorage.getItem(key);
       window.localStorage.removeItem(key);

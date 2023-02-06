@@ -1,6 +1,6 @@
 {
   "name": "local-storage-proxy-wrapper",
-  "version": "1.1.17",
+  "version": "1.1.18",
   "description": "localstorage proxy wrapper with listener (available on browser and node)",
   "repository": "https://github.com/vkuprin/local-storage-proxy-wrapper",
   "keywords": [
