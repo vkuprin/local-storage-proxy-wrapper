@@ -2,7 +2,23 @@
 
 A library which provides assistance in managing the localStorage object and adds the capability to detect modifications to localStorage.
 
-[![Rate this package](https://badges.openbase.com/js/rating/local-storage-proxy-wrapper.svg?token=qocsFqVQshrwHHfbBZFxCary9nXTxo2R90G48g8zdOM=)](https://openbase.com/js/local-storage-proxy-wrapper?utm_source=embedded&amp;utm_medium=badge&amp;utm_campaign=rate-badge)
+[//]: # ([![Rate this package]&#40;https://badges.openbase.com/js/rating/local-storage-proxy-wrapper.svg?token=qocsFqVQshrwHHfbBZFxCary9nXTxo2R90G48g8zdOM=&#41;]&#40;https://openbase.com/js/local-storage-proxy-wrapper?utm_source=embedded&amp;utm_medium=badge&amp;utm_campaign=rate-badge&#41;)
+
+### Table of Contents
+- [Installation](#Installation)
+- [Purpose](#purpose)
+  - [API Reference](#API)
+    - [constructor(historySize: number = 1)](#constructorhistorysize-number--1)
+    - [getHistory(key: string): ListenerValue[]](#gethistorykey-string-listenervalue)
+    - [clearHistory(key: string): void](#clearhistorykey-string-void)
+    - [addChangeListener(key: string, listener: Listener): void](#addchangelistenerkey-string-listener-listener-void)
+    - [clearChangeListeners(key: string): void](#clearchangelistenerskey-string-void)
+    - [addGlobalChangeListener(listener: GlobalListener): void](#addglobalchangelistenerlistener-globallistener-void)
+    - [clearGlobalChangeListeners(): void](#clearglobalchangelisteners-void)
+    - [setMultiple(values: { [key: string]: string }): void](#setmultiplevalues-key-string-string-void)
+    - [getMultiple(...keys: string[]): { [key: string]: string }](#getmultiplekeys-string-key-string-string)
+  - [Examples](#examples)
+
 ### Installation
 To install the library, run the following command:
 
@@ -13,13 +29,12 @@ yarn add local-storage-proxy-wrapper
 ```
 
 ### Purpose
-The purpose of this library is to provide a wrapper around the localStorage object which will allow you to detect when the localStorage object has been modified.
-And access properties of the localStorage object in a more intuitive way.
+It provides more intuitive way to use localStorage and various functionalities like setting, getting, and deleting values, listening for changes to localStorage, getting the history of previous changes, and getting or setting multiple keys...
 
 ### Usage
 To use the library, import it into your project:
 
-### Usage with a wrapper
+### Usage with a wrapper ( recommended )
 
 ```javascript
 import { LocalStorageWrapper, localStorageProxy } from 'local-storage-proxy-wrapper';
@@ -101,7 +116,7 @@ store.setMultiple({
 store.getMultiple('keyOne', 'keyTwo', 'keyThree'); // { keyOne: 'valueOne', keyTwo: 'valueTwo', keyThree: 'valueThree' }
 ```
 
-### Direct usage with no wrapper
+### Direct usage with no wrapper ( not recommended )
 ```javascript
 import { localStorageProxy } from 'local-storage-proxy-wrapper';
 ```
