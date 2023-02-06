@@ -11,12 +11,12 @@ A library which provides assistance in managing the localStorage object and adds
     - [constructor(historySize: number = 1)](#constructorhistorysize-number--1)
     - [getHistory(key: string): ListenerValue[]](#gethistorykey-string-listenervalue)
     - [clearHistory(key: string): void](#clearhistorykey-string-void)
-    - [addChangeListener(key: string, listener: Listener): void](#addchangelistenerkey-string-listener-listener-void)
+    - [addChangeListener(key: string, listener: Listener): void](#addchangelistenerkey-string-listener-changelistener-void)
     - [clearChangeListeners(key: string): void](#clearchangelistenerskey-string-void)
-    - [addGlobalChangeListener(listener: GlobalListener): void](#addglobalchangelistenerlistener-globallistener-void)
+    - [addGlobalChangeListener(listener: GlobalListener): void](#addglobalchangelistenerlistener-changelistener-void)
     - [clearGlobalChangeListeners(): void](#clearglobalchangelisteners-void)
-    - [setMultiple(values: { [key: string]: string }): void](#setmultiplevalues-key-string-string-void)
-    - [getMultiple(...keys: string[]): { [key: string]: string }](#getmultiplekeys-string-key-string-string)
+    - [setMultiple(values: { [key: string]: string }): void](#setmultiplevalues--key-string-listenervalue--void)
+    - [getMultiple(...keys: string[]): { [key: string]: string }](#getmultiplekeys-string--key-string-listenervalue-)
   - [Examples](#examples)
 
 ### Installation
