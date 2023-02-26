@@ -846,26 +846,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jsdom-global@npm:^3.0.4":
-  version: 3.0.4
-  resolution: "@types/jsdom-global@npm:3.0.4"
-  dependencies:
-    "@types/jsdom": "*"
-  checksum: c4da8432609686961a4336b8adfe882cd844a5c8cb0213d12c8d2a69d8602a73ef0f175e9ed7d45ab75b833c8551147eb21015efe1b9505872326f1ea9d7ec91
-  languageName: node
-  linkType: hard
-
-"@types/jsdom@npm:*, @types/jsdom@npm:^21.1.0":
-  version: 21.1.0
-  resolution: "@types/jsdom@npm:21.1.0"
-  dependencies:
-    "@types/node": "*"
-    "@types/tough-cookie": "*"
-    parse5: ^7.0.0
-  checksum: 39d3c580283cb7cc3b2729738fd2cd64344e44c815d08f7b6ee7d9c973f7512eff7e7187408649c9da69b76ec81c118868e8b8787d50320f3e2f9cbbd0b000d4
-  languageName: node
-  linkType: hard
-
 "@types/jsdom@npm:^20.0.0":
   version: 20.0.1
   resolution: "@types/jsdom@npm:20.0.1"
@@ -874,6 +854,17 @@ __metadata:
     "@types/tough-cookie": "*"
     parse5: ^7.0.0
   checksum: d55402c5256ef451f93a6e3d3881f98339fe73a5ac2030588df056d6835df8367b5a857b48d27528289057e26dcdd3f502edc00cb877c79174cb3a4c7f2198c1
+  languageName: node
+  linkType: hard
+
+"@types/jsdom@npm:^21.1.0":
+  version: 21.1.0
+  resolution: "@types/jsdom@npm:21.1.0"
+  dependencies:
+    "@types/node": "*"
+    "@types/tough-cookie": "*"
+    parse5: ^7.0.0
+  checksum: 39d3c580283cb7cc3b2729738fd2cd64344e44c815d08f7b6ee7d9c973f7512eff7e7187408649c9da69b76ec81c118868e8b8787d50320f3e2f9cbbd0b000d4
   languageName: node
   linkType: hard
 
@@ -895,13 +886,6 @@ __metadata:
   version: 2.0.1
   resolution: "@types/stack-utils@npm:2.0.1"
   checksum: 205fdbe3326b7046d7eaf5e494d8084f2659086a266f3f9cf00bccc549c8e36e407f88168ad4383c8b07099957ad669f75f2532ed4bc70be2b037330f7bae019
-  languageName: node
-  linkType: hard
-
-"@types/text-encoding@npm:^0.0.36":
-  version: 0.0.36
-  resolution: "@types/text-encoding@npm:0.0.36"
-  checksum: 06607296d5373f87369a65caa101619fdad3f19f5e33cc731cf458f58ee365664860c68600c30319d17ff72ed7abcc222dcfca14227205bd746af4582c4d622e
   languageName: node
   linkType: hard
 
@@ -2670,15 +2654,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdom-global@npm:^3.0.2":
-  version: 3.0.2
-  resolution: "jsdom-global@npm:3.0.2"
-  peerDependencies:
-    jsdom: ">=10.0.0"
-  checksum: 5c665a412c244d8cfe541da784ff6888c0ed041da3f4c03d7d4ab514215b3f50a934f89c33b543b7848765d841029978a2592dc04b2e0a8734b4bb54809e67d7
-  languageName: node
-  linkType: hard
-
 "jsdom@npm:^20.0.0":
   version: 20.0.3
   resolution: "jsdom@npm:20.0.3"
@@ -2818,13 +2793,9 @@ __metadata:
   resolution: "local-storage-proxy-wrapper@workspace:."
   dependencies:
     "@types/jsdom": ^21.1.0
-    "@types/jsdom-global": ^3.0.4
-    "@types/text-encoding": ^0.0.36
     jest: ^29.4.3
     jest-environment-jsdom: ^29.4.3
     jsdom: ^21.1.0
-    jsdom-global: ^3.0.2
-    text-encoding: ^0.7.0
     ts-jest: ^29.0.5
     typescript: ^4.9.5
   languageName: unknown
@@ -3771,13 +3742,6 @@ __metadata:
     glob: ^7.1.4
     minimatch: ^3.0.4
   checksum: 3b34a3d77165a2cb82b34014b3aba93b1c4637a5011807557dc2f3da826c59975a5ccad765721c4648b39817e3472789f9b0fa98fc854c5c1c7a1e632aacdc28
-  languageName: node
-  linkType: hard
-
-"text-encoding@npm:^0.7.0":
-  version: 0.7.0
-  resolution: "text-encoding@npm:0.7.0"
-  checksum: b6109a843fb1b8748b32e1ecd6df74d370f46c13ac136bcb6ca15db70209bb0b8ec1f296ebb4b0dd9961150e205dcc044b89f8cf7657f6faef78c7569a2a81bc
   languageName: node
   linkType: hard
 
