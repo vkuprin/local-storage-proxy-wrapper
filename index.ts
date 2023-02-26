@@ -141,7 +141,9 @@ export class LocalStorageWrapper {
   setMultiple(data: { [key: string]: ListenerValue }): void {
     for (const key of Object.keys(data)) {
       const oldValue = window.localStorage.getItem(key);
+      // @ts-ignore
       window.localStorage.setItem(key, data[key]);
+      // @ts-ignore
       this.notifyListeners(data[key], oldValue, key);
     }
   }
@@ -153,6 +155,7 @@ export class LocalStorageWrapper {
   getMultiple(keys: string[]): { [key: string]: ListenerValue } {
     const result = {};
     for (const key of keys) {
+      // @ts-ignore
       result[key] = window.localStorage.getItem(key);
     }
     return result;
