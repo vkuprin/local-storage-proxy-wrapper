@@ -20,6 +20,8 @@
     store.set(localStorage, 'foo', 'bar');
     store.set(localStorage, 'foo', 'bar2');
     store.set(localStorage, 'foo', 'bar3');
+    store.set(xn
+    localStorage, 'foo', 'bar4');
     store.set(localStorage, 'soo', 'sar');
 
     store.setMultiple({
