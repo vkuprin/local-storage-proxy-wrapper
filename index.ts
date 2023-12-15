@@ -1,11 +1,11 @@
 export type ListenerValue =
-    string | number | boolean | object |
-    Array<string | number | boolean | object>;
+  string | number | boolean | object |
+  Array<string | number | boolean | object>;
 
 export type ChangeListener = (
-    newValue: ListenerValue,
-    oldValue: ListenerValue,
-    key: string
+  newValue: ListenerValue,
+  oldValue: ListenerValue,
+  key: string
 ) => void;
 
 export class LocalStorageWrapper {
@@ -123,15 +123,15 @@ export class LocalStorageWrapper {
     * @param storage The storage to listen to
   */
   addGlobalChangeListener(listener: ChangeListener): void {
-      this.globalChangeListeners.push(listener);
-    }
+    this.globalChangeListeners.push(listener);
+  }
 
   /*
     * Removes a global change listener
     * @param listener The listener to remove
   */
   clearGlobalChangeListeners(): void {
-      this.globalChangeListeners = [];
+    this.globalChangeListeners = [];
   }
 
   /*
@@ -141,8 +141,9 @@ export class LocalStorageWrapper {
   setMultiple(data: { [key: string]: ListenerValue }): void {
     for (const key of Object.keys(data)) {
       const oldValue = window.localStorage.getItem(key);
-      window.localStorage.setItem(key, data[key]);
-      this.notifyListeners(data[key], oldValue, key);
+      window.localStorage.setItem(key, String(data[key]));
+      const safeOldValue = oldValue !== null ? oldValue : '';
+      this.notifyListeners(data[key], safeOldValue, key);
     }
   }
 
@@ -151,9 +152,10 @@ export class LocalStorageWrapper {
     * @param keys The keys to get the values for in the array format [key1, key2]
   */
   getMultiple(keys: string[]): { [key: string]: ListenerValue } {
-    const result = {};
+    const result: { [key: string]: ListenerValue } = {};
     for (const key of keys) {
-      result[key] = window.localStorage.getItem(key);
+      const item = window.localStorage.getItem(key);
+      result[key] = item !== null ? item : '';
     }
     return result;
   }
@@ -172,4 +174,4 @@ export class LocalStorageWrapper {
 
 const checkWindow = () => (typeof window === 'undefined' ? {} : localStorage);
 
-export const localStorageProxy: Storage = <Storage> new Proxy(checkWindow(), new LocalStorageWrapper());
+export const localStorageProxy: Storage = <Storage>new Proxy(checkWindow(), new LocalStorageWrapper());
