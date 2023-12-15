@@ -1,6 +1,0 @@
-{
-  "entryPointStrategy": "expand",
-  "entryPoints": [
-    "./index.ts"
-  ]
-}

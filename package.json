@@ -18,9 +18,5 @@
     "prepublish": "tsc"
   },
   "author": "Vitaly Kuprin",
-  "license": "MIT",
-  "devDependencies": {
-    "typedoc": "^0.25.4"
-  },
-  "packageManager": "yarn@4.0.2"
+  "license": "MIT"
 }
