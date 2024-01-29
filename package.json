@@ -18,5 +18,14 @@
     "prepublish": "tsc"
   },
   "author": "Vitaly Kuprin",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "jest": "^29.4.3",
+    "jest-environment-jsdom": "^29.4.3",
+    "jsdom": "^21.1.0",
+    "ts-jest": "^29.0.5"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.5"
+  }
 }
