@@ -1,20 +1,11 @@
-export type ListenerValue =
-    string | number | boolean | object |
-    Array<string | number | boolean | object>;
+export type ListenerValue = string | number | boolean | object | Array<string | number | boolean | object>;
 
-export type ChangeListener = (
-    newValue: ListenerValue,
-    oldValue: ListenerValue,
-    key: string
-) => void;
+export type ChangeListener = (newValue: ListenerValue, oldValue: ListenerValue, key: string) => void;
 
 export class LocalStorageWrapper {
   private changeListeners: { [key: string]: ChangeListener[] } = {};
-
   private globalChangeListeners: ChangeListener[] = [];
-
   private history: { [key: string]: any } = {};
-
   private readonly historySize: number;
 
   constructor(historySize: number = 1) {
@@ -34,7 +25,6 @@ export class LocalStorageWrapper {
         listener(newValue, oldValue, key);
       }
     }
-
     if (this.globalChangeListeners.length > 0) {
       for (const listener of this.globalChangeListeners) {
         listener(newValue, oldValue, key);
@@ -42,11 +32,6 @@ export class LocalStorageWrapper {
     }
   }
 
-  /*
-    * Returns the history of changes for a given key
-    * depends on the historySize passed to the constructor
-    * @param key name The key to get the history for
-  */
   getHistory(key: string): ListenerValue[] {
     if (!this.history[key]) {
       return [];
@@ -54,39 +39,59 @@ export class LocalStorageWrapper {
     return this.history[key];
   }
 
-  /*
-    * Clears the history for a given key
-    * @param key name The key to clear the history for
-  */
   clearHistory(key: string): void {
     if (this.history[key]) {
       this.history[key] = [];
     }
   }
 
-  /*
-    * Gets the value for a given key from the storage
-    * @param key name The key to get the value for
-    * @param storage The storage to get the value from
-  */
-  get(target: Storage, key: string) {
+  private async checkMemoryLimit(target: Storage): Promise<boolean> {
     try {
-      return target[key];
+      const testKey = "__test__";
+      target.setItem(testKey, "test");
+      target.removeItem(testKey);
+      return Promise.resolve(true);
+    } catch (e) {
+      return Promise.reject(new Error("Storage memory limit reached"));
+    }
+  }
+
+  get(target: Storage, key: string, async: boolean = false): Promise<ListenerValue | null> {
+    if (async) {
+      return this.getAsync(target, key);
+    } else {
+      return Promise.resolve(this.getSync(target, key));
+    }
+  }
+
+  private getSync(target: Storage, key: string): ListenerValue | null {
+    try {
+      return target.getItem(key);
     } catch (e) {
       throw new Error(`Error getting value for key ${key} from storage`);
     }
   }
 
-  /*
-    * Sets the value for a given key in the storage
-    * @param target The storage to set the value in
-    * @param key name The key to set the value for
-    * @param value The value to set
-  */
-  set(target: Storage, key: string, value: ListenerValue): boolean {
+  private async getAsync(target: Storage, key: string): Promise<ListenerValue | null> {
     try {
-      const oldValue = target[key];
-      target[key] = value;
+      return Promise.resolve(target.getItem(key));
+    } catch (e) {
+      return Promise.reject(new Error(`Error getting value for key ${key} from storage`));
+    }
+  }
+
+  set(target: Storage, key: string, value: ListenerValue, async: boolean = false): Promise<boolean> {
+    if (async) {
+      return this.setAsync(target, key, value);
+    } else {
+      return Promise.resolve(this.setSync(target, key, value));
+    }
+  }
+
+  private setSync(target: Storage, key: string, value: ListenerValue): boolean {
+    try {
+      const oldValue: ListenerValue = target.getItem(key) ?? "";
+      target.setItem(key, value as string);
       this.notifyListeners(value, oldValue, key);
       return true;
     } catch (e) {
@@ -94,12 +99,32 @@ export class LocalStorageWrapper {
     }
   }
 
-  /*
-    * Adds a change listener for a given key to
-    * observe changes in the storage for old and new values
-    * @param key name The key to add the listener for
-    * @param listener The listener to add
-  */
+  private async setAsync(target: Storage, key: string, value: ListenerValue): Promise<boolean> {
+    try {
+      const oldValue: ListenerValue = target.getItem(key) ?? "";
+      target.setItem(key, value as string);
+      this.notifyListeners(value, oldValue, key);
+      return Promise.resolve(true);
+    } catch (e) {
+      return Promise.reject(new Error(`Error setting value for key ${key} in storage`));
+    }
+  }
+
+  async setWithMemoryCheck(
+    target: Storage,
+    key: string,
+    value: ListenerValue,
+    async: boolean = false,
+  ): Promise<boolean> {
+    try {
+      await this.checkMemoryLimit(target);
+      return await this.set(target, key, value, async);
+    } catch (e) {
+      console.warn(`Memory limit reached. Keeping previous state for key ${key}`);
+      return Promise.resolve(false);
+    }
+  }
+
   addChangeListener(key: string, listener: ChangeListener): void {
     if (!this.changeListeners[key]) {
       this.changeListeners[key] = [];
@@ -107,69 +132,79 @@ export class LocalStorageWrapper {
     this.changeListeners[key].push(listener);
   }
 
-  /*
-    * Removes a change listener for a given key
-    * @param key name The key to remove the listener for
-  */
   clearChangeListeners(key: string): void {
     if (this.changeListeners[key]) {
       this.changeListeners[key] = [];
     }
   }
 
-  /*
-    * Listen to all changes in the storage for all keys
-    * @param listener The listener to add
-    * @param storage The storage to listen to
-  */
   addGlobalChangeListener(listener: ChangeListener): void {
-      this.globalChangeListeners.push(listener);
-    }
+    this.globalChangeListeners.push(listener);
+  }
 
-  /*
-    * Removes a global change listener
-    * @param listener The listener to remove
-  */
   clearGlobalChangeListeners(): void {
-      this.globalChangeListeners = [];
+    this.globalChangeListeners = [];
   }
 
-  /*
-    * Sets multiple values in the storage at once
-    * @param values The values to set in the object format { key: value }
-  */
-  setMultiple(data: { [key: string]: ListenerValue }): void {
-    for (const key of Object.keys(data)) {
-      const oldValue = window.localStorage.getItem(key);
-      window.localStorage.setItem(key, data[key]);
-      this.notifyListeners(data[key], oldValue, key);
-    }
+  async setMultiple(data: { [key: string]: ListenerValue }, async: boolean = false): Promise<void> {
+    const promises = Object.keys(data).map((key) =>
+      this.setWithMemoryCheck(window.localStorage, key, data[key], async),
+    );
+    await Promise.all(promises);
+    return undefined;
   }
 
-  /*
-    * Gets multiple values in the storage at once
-    * @param keys The keys to get the values for in the array format [key1, key2]
-  */
-  getMultiple(keys: string[]): { [key: string]: ListenerValue } {
-    const result = {};
-    for (const key of keys) {
-      result[key] = window.localStorage.getItem(key);
-    }
+  async getMultiple(keys: string[], async: boolean = false): Promise<{ [key: string]: ListenerValue | null }> {
+    const promises = keys.map((key) => this.get(window.localStorage, key, async));
+    const results = await Promise.all(promises);
+    const result: { [key_2: string]: ListenerValue | null } = {};
+    results.forEach((value, index) => {
+      result[keys[index]] = value;
+    });
     return result;
   }
 
-  /*
-    * Removes multiple values in the storage at once
-    * @param keys The keys to remove the values for in the array format [key1, key2]
-  */
-  removeMultiple(keys: string[]): void {
-    for (const key of keys) {
-      const oldValue = window.localStorage.getItem(key);
+  async removeMultiple(keys: string[], async: boolean = false): Promise<void> {
+    const promises = keys.map((key) => (async ? this.removeAsync(key) : Promise.resolve(this.removeSync(key))));
+    await Promise.all(promises);
+    return undefined;
+  }
+
+  private removeSync(key: string): void {
+    window.localStorage.removeItem(key);
+  }
+
+  private async removeAsync(key: string): Promise<void> {
+    return new Promise((resolve) => {
       window.localStorage.removeItem(key);
-    }
+      resolve();
+    });
   }
 }
 
-const checkWindow = () => (typeof window === 'undefined' ? {} : localStorage);
+const checkWindow = () => (typeof window === "undefined" ? {} : localStorage);
 
-export const localStorageProxy: Storage = <Storage> new Proxy(checkWindow(), new LocalStorageWrapper());
+class LocalStorageProxyHandler implements ProxyHandler<Storage> {
+  private wrapper: LocalStorageWrapper;
+
+  constructor(wrapper: LocalStorageWrapper) {
+    this.wrapper = wrapper;
+  }
+
+  get(target: Storage, p: string | symbol, receiver: any): any {
+    if (typeof p === "string") {
+      return this.wrapper.get(target, p);
+    }
+    return Reflect.get(target, p, receiver);
+  }
+
+  set(target: Storage, p: string | symbol, value: any, receiver: any): boolean {
+    if (typeof p === "string") {
+      this.wrapper.set(target, p, value);
+      return true;
+    }
+    return Reflect.set(target, p, value, receiver);
+  }
+}
+
+export const localStorageProxy: {} = new Proxy(checkWindow(), new LocalStorageProxyHandler(new LocalStorageWrapper()));

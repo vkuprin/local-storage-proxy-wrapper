@@ -1,3 +1,7 @@
 index.js
 .idea
 dist
+.yarn/install-state.gz
+.yarn
+.yarnrc.yml
+node_modules
