@@ -21,6 +21,7 @@ It provides more intuitive way to use localStorage and various functionalities l
 #### Change Listeners:
 
 Per-Key Listeners: You can add listeners to specific keys that will be notified when the value associated with those keys changes.
+
 Global Listeners: You can add listeners that will be notified of any changes to the localStorage.
 
 #### History Tracking:
@@ -37,7 +38,9 @@ Memory Limit Checking: Before setting a value, the library can check if the stor
 
 #### Bulk Operations:
 Set Multiple: You can set multiple key-value pairs at once with a single method call.
+
 Get Multiple: You can retrieve multiple key-value pairs at once.
+
 Remove Multiple: You can remove multiple keys at once.
 
 #### Proxy Handling:
