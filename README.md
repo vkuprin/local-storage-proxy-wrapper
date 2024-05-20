@@ -46,3 +46,53 @@ The library provides a proxy interface (localStorageProxy) that allows you to in
 
 ### Documentation
 For detailed documentation, visit the [documentation page](https://vkuprin.github.io/local-storage-proxy-wrapper/)
+
+### React Example
+
+```jsx
+import LocalStorageWrapper from 'local-storage-proxy-wrapper';
+
+const useLocalStorage = () => {
+  const storage = new LocalStorageWrapper.LocalStorageWrapper();
+
+  const getAsyncValue = async (key: string) => {
+    return await storage.get(storage, key, true);
+  };
+
+  const setAsyncValue = async (key: string, value: any) => {
+    await storage.set(key, value, true);
+  };
+
+  return {
+    getValue: getAsyncValue,
+    setValue: setAsyncValue,
+  };
+};
+
+const MyComponent = () => {
+    const { getValue, setValue } = useLocalStorage();
+    const [storedValue, setStoredValue] = useState(null);
+
+    const fetchValue = async () => {
+        const value = await getValue('myKey');
+        setStoredValue(value);
+    };
+
+    useEffect(() => {
+        fetchValue();
+    }, []);
+
+    const handleSetValue = async () => {
+        await setValue('myKey', 'newValue');
+        fetchValue(); // Refresh the stored value
+    };
+
+    return (
+        <div>
+            <p>Stored Value: {storedValue}</p>
+            <button onClick={handleSetValue}>Set New Value</button>
+    </div>
+    );
+};
+```
+
