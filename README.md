@@ -10,7 +10,7 @@ To install the library, run the following command:
 npm install local-storage-proxy-wrapper
 # or
 yarn add local-storage-proxy-wrapper
-
+```
 
 ### Purpose
 
