@@ -19,7 +19,8 @@
     "type-check": "tsc --noEmit",
     "test": "jest",
     "lint": "eslint",
-    "format": "prettier . --write"
+    "format": "prettier . --write",
+    "typedoc": "npx typedoc index.ts"
   },
   "devDependencies": {
     "@babel/core": "^7.24.5",

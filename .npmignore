@@ -6,3 +6,9 @@ example/*
 example
 index.test.ts
 index.test.d.ts
+jest.config.js
+.eslintrc.json
+.babelrc
+yarn.lock
+.yarnrc.yml
+.prettierrc
