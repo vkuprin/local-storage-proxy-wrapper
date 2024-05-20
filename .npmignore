@@ -4,3 +4,5 @@ tsconfig.json
 index.ts
 example/*
 example
+index.test.ts
+index.test.d.ts
