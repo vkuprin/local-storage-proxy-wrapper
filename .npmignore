@@ -13,3 +13,5 @@ yarn.lock
 .yarnrc.yml
 .prettierrc
 docs
+.yarn
+eslint.config.mjs
