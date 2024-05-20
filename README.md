@@ -60,7 +60,7 @@ import LocalStorageWrapper, {
 } from 'local-storage-proxy-wrapper';
 
 const useLocalStorage = () => {
-    const storage = new LocalStorageWrapper.LocalStorageWrapper();
+    const storage = new LocalStorageWrapper();
 
     const getAsyncValue = async (key: string) => {
         return await storage.get(storage, key, true);
