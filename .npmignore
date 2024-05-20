@@ -12,3 +12,4 @@ jest.config.js
 yarn.lock
 .yarnrc.yml
 .prettierrc
+docs
