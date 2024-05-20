@@ -37,6 +37,7 @@ Asynchronous Get/Set: The library provides methods for getting and setting items
 Memory Limit Checking: Before setting a value, the library can check if the storage has reached its memory limit, preventing errors related to exceeding the storage quota.
 
 #### Bulk Operations:
+
 Set Multiple: You can set multiple key-value pairs at once with a single method call.
 
 Get Multiple: You can retrieve multiple key-value pairs at once.
@@ -48,28 +49,31 @@ Remove Multiple: You can remove multiple keys at once.
 The library provides a proxy interface (localStorageProxy) that allows you to interact with localStorage as if it were a regular JavaScript object, while still benefiting from the added functionalities.
 
 ### Documentation
+
 For detailed documentation, visit the [documentation page](https://vkuprin.github.io/local-storage-proxy-wrapper/)
 
 ### React Example
 
 ```jsx
-import LocalStorageWrapper from 'local-storage-proxy-wrapper';
+import LocalStorageWrapper, {
+    ListenerValue,
+} from 'local-storage-proxy-wrapper';
 
 const useLocalStorage = () => {
-  const storage = new LocalStorageWrapper.LocalStorageWrapper();
+    const storage = new LocalStorageWrapper.LocalStorageWrapper();
 
-  const getAsyncValue = async (key: string) => {
-    return await storage.get(storage, key, true);
-  };
+    const getAsyncValue = async (key: string) => {
+        return await storage.get(storage, key, true);
+    };
 
-  const setAsyncValue = async (key: string, value: any) => {
-    await storage.set(key, value, true);
-  };
+    const setAsyncValue = async (key: string, value: ListenerValue) => {
+        await storage.set(storage, key, value, true);
+    };
 
-  return {
-    getValue: getAsyncValue,
-    setValue: setAsyncValue,
-  };
+    return {
+        getValue: getAsyncValue,
+        setValue: setAsyncValue,
+    };
 };
 
 const MyComponent = () => {
@@ -98,4 +102,3 @@ const MyComponent = () => {
     );
 };
 ```
-
